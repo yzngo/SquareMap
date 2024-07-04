@@ -2,7 +2,7 @@
 
 namespace JoyNow.SLG
 {
-    public class MapCell : MonoBehaviour
+    public class SquareCell : MonoBehaviour
     {
         
     }
