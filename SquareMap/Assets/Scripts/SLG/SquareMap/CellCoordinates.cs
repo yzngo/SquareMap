@@ -7,9 +7,12 @@ namespace JoyNow.SLG
     public struct CellCoordinates
     {
         [SerializeField]
-        private int x, z;
+        private int x;
         public int X => x;
 
+        [SerializeField]
+        private int z;
+        
         public int Z => z;
         
         public CellCoordinates(int x, int z)
@@ -23,6 +26,9 @@ namespace JoyNow.SLG
             return "(" + X + "," + Z + ")";
         }
 
+        /// <summary>
+        /// 通过实际场景中位置获取网格坐标
+        /// </summary>
         public static CellCoordinates FromPosition(Vector3 position)
         {
             float x = position.x / (MapMetrics.CellEdgeLength);
@@ -31,5 +37,34 @@ namespace JoyNow.SLG
             int iZ = Mathf.RoundToInt(z);
             return new CellCoordinates(iX, iZ);
         }
+
+        /// <summary>
+        /// 从索引获取网格坐标
+        /// </summary>
+        public static CellCoordinates FromIndex(int index)
+        {
+            int x = index % SquareGrid.width;
+            int z = index / SquareGrid.width;
+            return new CellCoordinates(x, z);
+        }
+
+        /// <summary>
+        /// 从网格坐标获取索引
+        /// </summary>
+        public static int ToIndex(CellCoordinates coordinates)
+        {
+            return coordinates.X + coordinates.Z * SquareGrid.width;
+        }
+
+        /// <summary>
+        /// 通过实际场景中位置获取网格索引
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public static int ToIndex(Vector3 position)
+        {
+            return ToIndex(FromPosition(position));
+        }
+        
     }
 }

@@ -11,6 +11,9 @@ namespace JoyNow.SLG
     {
         public const int width = 15;
         public const int height = 15;
+
+        public Color defaultColor = Color.white;
+        public Color touchedColor = Color.cyan;
         
         public SquareCell cellPrefab;
         public TextMeshProUGUI mapCellLabelPrefab;
@@ -18,6 +21,8 @@ namespace JoyNow.SLG
         private SquareMesh squareMesh;
 
         private SquareCell[] cells;
+
+        private SquareCell selectCell;
 
         private void Awake()
         {
@@ -53,11 +58,12 @@ namespace JoyNow.SLG
             position.z = z * MapMetrics.CellEdgeLength;
 
             SquareCell cell = cells[i] = Instantiate(cellPrefab);
-            cell.Id = i;
+            cell.Index = i;
             cell.Coordinates = new CellCoordinates(x, z);
+            cell.color = defaultColor;
             cell.transform.SetParent(transform, false);
             cell.transform.localPosition = position;
-            cell.name = "Cell-" + cell.Id.ToString("0000") + "  (" + x + "," + z + ")";
+            cell.name = "Cell-" + cell.Index.ToString("0000") + "  (" + x + "," + z + ")";
             
             TextMeshProUGUI label = Instantiate(mapCellLabelPrefab);
             label.rectTransform.SetParent(gridCanvas.transform, false);
@@ -87,8 +93,17 @@ namespace JoyNow.SLG
         private void TouchCell(Vector3 position)
         {
             position = transform.InverseTransformPoint(position);
-            CellCoordinates coordinates = CellCoordinates.FromPosition(position);
-            Debug.Log("touched at: " + coordinates.ToString());
+            // CellCoordinates coordinates = CellCoordinates.FromPosition(position);
+            int index = CellCoordinates.ToIndex(position);
+            Debug.Log(index);
+            SquareCell cell = cells[index];
+            if (selectCell != null)
+            {
+                selectCell.color = defaultColor;
+            }
+            selectCell = cell;
+            cell.color = touchedColor;
+            squareMesh.Triangulate(cells);
         }
     }
 }

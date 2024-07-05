@@ -12,7 +12,9 @@ namespace JoyNow.SLG
     {
         private Mesh squareMesh;
         private List<Vector3> vertices;
+        private List<Color> colors;
         private List<int> triangles;
+        
         private BoxCollider boxCollider;
 
         private void Awake()
@@ -21,6 +23,7 @@ namespace JoyNow.SLG
             boxCollider = gameObject.AddComponent<BoxCollider>();
             squareMesh.name = "Square Mesh";
             vertices = new List<Vector3>();
+            colors = new List<Color>();
             triangles = new List<int>();
         }
         
@@ -28,12 +31,14 @@ namespace JoyNow.SLG
         {
             squareMesh.Clear();
             vertices.Clear();
+            colors.Clear();
             triangles.Clear();
             for (int i = 0; i < cells.Length; i++)
             {
                 Triangulate(cells[i]);
             }
             squareMesh.vertices = vertices.ToArray();
+            squareMesh.colors = colors.ToArray();
             squareMesh.triangles = triangles.ToArray();
             squareMesh.RecalculateNormals();
 
@@ -48,6 +53,7 @@ namespace JoyNow.SLG
             for (int i = 0; i < 4; i++)
             {
                 AddTriangle(center, center + MapMetrics.CellCorners[i], center + MapMetrics.CellCorners[(i + 1) % 4]);
+                AddTriangleColor(cell.color);
             }
         }
         
@@ -60,6 +66,13 @@ namespace JoyNow.SLG
             triangles.Add(vertexIndex);
             triangles.Add(vertexIndex + 1);
             triangles.Add(vertexIndex + 2);
+        }
+        
+        private void AddTriangleColor(Color color)
+        {
+            colors.Add(color);
+            colors.Add(color);
+            colors.Add(color);
         }
     }
 }
