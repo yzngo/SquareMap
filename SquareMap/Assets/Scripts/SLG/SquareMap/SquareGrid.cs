@@ -36,6 +36,12 @@ namespace JoyNow.SLG
             squareMesh.Triangulate(cells);
         }
 
+        /// <summary>
+        /// x,z 为网格坐标，i 为索引
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="z"></param>
+        /// <param name="i"></param>
         private void CreateCell(int x, int z, int i)
         {
             Vector3 position;
@@ -44,13 +50,16 @@ namespace JoyNow.SLG
             position.z = z * MapMetrics.CellEdgeLength;
 
             SquareCell cell = cells[i] = Instantiate(cellPrefab);
+            cell.Id = i;
+            cell.Coordinates = new CellCoordinates(x, z);
             cell.transform.SetParent(transform, false);
             cell.transform.localPosition = position;
+            cell.name = "Cell-" + cell.Id.ToString("0000") + "  (" + x + "," + z + ")";
             
             TextMeshProUGUI label = Instantiate(mapCellLabelPrefab);
             label.rectTransform.SetParent(gridCanvas.transform, false);
             label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
-            label.text = "(" + x + "," + z + ")";
+            label.text = cell.Coordinates.ToString();
         }
         
     }

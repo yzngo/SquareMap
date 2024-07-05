@@ -3,7 +3,7 @@
 namespace JoyNow.SLG
 {
     /// <summary>
-    /// 改成 ScriptableObject 单例
+    /// yzntodo 改成 ScriptableObject 单例
     /// </summary>
     public static class MapMetrics
     {
