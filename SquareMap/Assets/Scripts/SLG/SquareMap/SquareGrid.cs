@@ -22,7 +22,7 @@ namespace JoyNow.SLG
 
         private SquareCell[] cells;
 
-        private SquareCell selectCell;
+        private SquareCell selectedCell;
 
         private void Awake()
         {
@@ -71,39 +71,30 @@ namespace JoyNow.SLG
             label.text = cell.Coordinates.ToString();
         }
 
-
-        private void Update()
-        {
-            if (Input.GetMouseButton(0))
-            {
-                HandleInput();
-            }
-        }
-
-        private void HandleInput()
-        {
-            Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(inputRay, out hit))
-            {
-                TouchCell(hit.point);
-            }
-        }
-
         private void TouchCell(Vector3 position)
+        {
+            position = transform.InverseTransformPoint(position);
+            int index = CellCoordinates.ToIndex(position);
+            SquareCell cell = cells[index];
+            if (selectedCell != null)
+            {
+                selectedCell.color = defaultColor;
+            }
+            selectedCell = cell;
+            cell.color = touchedColor;
+            squareMesh.Triangulate(cells);
+        }
+
+        public void ColorCell(Vector3 position, Color color)
         {
             position = transform.InverseTransformPoint(position);
             // CellCoordinates coordinates = CellCoordinates.FromPosition(position);
             int index = CellCoordinates.ToIndex(position);
-            Debug.Log(index);
             SquareCell cell = cells[index];
-            if (selectCell != null)
-            {
-                selectCell.color = defaultColor;
-            }
-            selectCell = cell;
-            cell.color = touchedColor;
+            cell.color = color;
+            // 重新构建模型
             squareMesh.Triangulate(cells);
+
         }
     }
 }
