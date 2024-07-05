@@ -29,8 +29,15 @@ namespace JoyNow.SLG
             Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(inputRay, out var hit))
             {
-                squareGrid.ColorCell(hit.point, activeColor);
+                var squareCell = squareGrid.GetCell(hit.point);
+                EditorCell(squareCell);
             }
+        }
+
+        public void EditorCell(SquareCell cell)
+        {
+            cell.color = activeColor;
+            squareGrid.Refresh();
         }
 
         public void SelectColor(int index)

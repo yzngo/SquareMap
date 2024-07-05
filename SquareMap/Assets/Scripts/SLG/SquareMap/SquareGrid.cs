@@ -9,7 +9,7 @@ namespace JoyNow.SLG
     /// </summary>
     public class SquareGrid : MonoBehaviour
     {
-        public const int width = 15;
+        public const int width = 20;
         public const int height = 15;
 
         public Color defaultColor = Color.white;
@@ -85,14 +85,16 @@ namespace JoyNow.SLG
             squareMesh.Triangulate(cells);
         }
 
-        public void ColorCell(Vector3 position, Color color)
+        public SquareCell GetCell(Vector3 position)
         {
             position = transform.InverseTransformPoint(position);
-            // CellCoordinates coordinates = CellCoordinates.FromPosition(position);
             int index = CellCoordinates.ToIndex(position);
-            SquareCell cell = cells[index];
-            cell.color = color;
-            // 重新构建模型
+            selectedCell = cells[index];
+            return selectedCell;
+        }
+
+        public void Refresh()
+        {
             squareMesh.Triangulate(cells);
         }
         

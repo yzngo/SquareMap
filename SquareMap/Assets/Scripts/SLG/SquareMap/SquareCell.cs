@@ -12,10 +12,7 @@ namespace JoyNow.SLG
         public CellCoordinates Coordinates;
 
         public Color color;
-        
-        [SerializeField]
-        private SquareCell[] neighbors;
 
-
+        public bool[] EdgePassable = new bool[4];
     }
 }
