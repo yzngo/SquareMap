@@ -55,6 +55,14 @@ namespace JoyNow.SLG
         {
             return coordinates.X + coordinates.Z * SquareGrid.width;
         }
+        
+        /// <summary>
+        /// 从网格坐标获取索引
+        /// </summary>
+        public static int ToIndex(int x, int z)
+        {
+            return x + z * SquareGrid.width;
+        }
 
         /// <summary>
         /// 通过实际场景中位置获取网格索引

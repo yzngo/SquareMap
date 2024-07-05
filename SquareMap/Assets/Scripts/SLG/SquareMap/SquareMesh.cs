@@ -50,9 +50,9 @@ namespace JoyNow.SLG
         private void Triangulate(SquareCell cell)
         {
             Vector3 center = cell.transform.localPosition;
-            for (int i = 0; i < 4; i++)
+            for (var d = SquareDirection.North; d <= SquareDirection.West; d++)
             {
-                AddTriangle(center, center + MapMetrics.CellCorners[i], center + MapMetrics.CellCorners[(i + 1) % 4]);
+                AddTriangle(center, center + MapMetrics.GetFirstCorner(d), center + MapMetrics.GetSecondCorner(d));
                 AddTriangleColor(cell.color);
             }
         }

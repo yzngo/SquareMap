@@ -11,13 +11,24 @@ namespace JoyNow.SLG
 
         public static float HalfCellEdgeLength = 0.5f * CellEdgeLength;
 
-        public static Vector3[] CellCorners =
+        private static Vector3[] cellCorners =
         {
             new Vector3(-HalfCellEdgeLength, 0, HalfCellEdgeLength),
             new Vector3(HalfCellEdgeLength, 0, HalfCellEdgeLength),
             new Vector3(HalfCellEdgeLength, 0, -HalfCellEdgeLength),
-            new Vector3(-HalfCellEdgeLength, 0, -HalfCellEdgeLength)
+            new Vector3(-HalfCellEdgeLength, 0, -HalfCellEdgeLength),
+            new Vector3(-HalfCellEdgeLength, 0, HalfCellEdgeLength)
         };
+
+        public static Vector3 GetFirstCorner(SquareDirection direction)
+        {
+            return cellCorners[(int)direction];
+        }
+        
+        public static Vector3 GetSecondCorner(SquareDirection direction)
+        {
+            return cellCorners[(int)direction + 1];
+        }
 
     }
 }

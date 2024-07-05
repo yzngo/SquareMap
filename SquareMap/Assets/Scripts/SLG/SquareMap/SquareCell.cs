@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace JoyNow.SLG
@@ -11,5 +12,10 @@ namespace JoyNow.SLG
         public CellCoordinates Coordinates;
 
         public Color color;
+        
+        [SerializeField]
+        private SquareCell[] neighbors;
+
+
     }
 }

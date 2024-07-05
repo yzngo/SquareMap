@@ -94,7 +94,32 @@ namespace JoyNow.SLG
             cell.color = color;
             // 重新构建模型
             squareMesh.Triangulate(cells);
-
+        }
+        
+        public SquareCell GetNeighbor(SquareCell squareCell, SquareDirection squareDirection)
+        {
+            int x =  squareCell.Coordinates.X;
+            int z =  squareCell.Coordinates.Z;
+            switch (squareDirection)
+            {
+                case SquareDirection.North:
+                    z += 1;
+                    break;
+                case SquareDirection.East:
+                    x += 1;
+                    break;
+                case SquareDirection.South:
+                    z -= 1;
+                    break;
+                case SquareDirection.West:
+                    x -= 1;
+                    break;
+            }
+            if (x < 0 || x >= SquareGrid.width || z < 0 || z >= SquareGrid.height)
+            {
+                return null;
+            }
+            return cells[CellCoordinates.ToIndex(x, z)];       
         }
     }
 }
