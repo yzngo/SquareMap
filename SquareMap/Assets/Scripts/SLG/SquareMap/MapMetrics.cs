@@ -7,16 +7,16 @@ namespace JoyNow.SLG
     /// </summary>
     public static class MapMetrics
     {
-        public static int CellEdgeLength = 10;
+        public static float CellEdgeLength = 5;
 
-        private static int halfCellEdgeLength = (int)(0.5f * CellEdgeLength);
+        public static float HalfCellEdgeLength = 0.5f * CellEdgeLength;
 
         public static Vector3[] CellCorners =
         {
-            new Vector3(-halfCellEdgeLength, 0, halfCellEdgeLength),
-            new Vector3(halfCellEdgeLength, 0, halfCellEdgeLength),
-            new Vector3(halfCellEdgeLength, 0, -halfCellEdgeLength),
-            new Vector3(-halfCellEdgeLength, 0, -halfCellEdgeLength)
+            new Vector3(-HalfCellEdgeLength, 0, HalfCellEdgeLength),
+            new Vector3(HalfCellEdgeLength, 0, HalfCellEdgeLength),
+            new Vector3(HalfCellEdgeLength, 0, -HalfCellEdgeLength),
+            new Vector3(-HalfCellEdgeLength, 0, -HalfCellEdgeLength)
         };
 
     }

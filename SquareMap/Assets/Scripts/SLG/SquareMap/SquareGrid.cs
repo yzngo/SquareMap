@@ -4,10 +4,13 @@ using UnityEngine;
 
 namespace JoyNow.SLG
 {
+    /// <summary>
+    /// 管理网格
+    /// </summary>
     public class SquareGrid : MonoBehaviour
     {
-        public int width = 15;
-        public int height = 15;
+        public const int width = 15;
+        public const int height = 15;
         
         public SquareCell cellPrefab;
         public TextMeshProUGUI mapCellLabelPrefab;
@@ -61,6 +64,31 @@ namespace JoyNow.SLG
             label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
             label.text = cell.Coordinates.ToString();
         }
-        
+
+
+        private void Update()
+        {
+            if (Input.GetMouseButton(0))
+            {
+                HandleInput();
+            }
+        }
+
+        private void HandleInput()
+        {
+            Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(inputRay, out hit))
+            {
+                TouchCell(hit.point);
+            }
+        }
+
+        private void TouchCell(Vector3 position)
+        {
+            position = transform.InverseTransformPoint(position);
+            CellCoordinates coordinates = CellCoordinates.FromPosition(position);
+            Debug.Log("touched at: " + coordinates.ToString());
+        }
     }
 }

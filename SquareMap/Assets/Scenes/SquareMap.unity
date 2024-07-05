@@ -152,8 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6700b6f16c445bea3f68ca016441852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 15
-  height: 15
   cellPrefab: {fileID: 5510446589247293727, guid: 2b31f18bfe3c20946a787f6605d93618, type: 3}
   mapCellLabelPrefab: {fileID: 4321234663250024146, guid: 98c54e0e129600d47806496cfbf5569d, type: 3}
 --- !u!4 &1362028298
@@ -250,8 +248,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: -0.628639, y: -0.0030341134, z: 0.0024553435, w: -0.7776875}
-  m_LocalPosition: {x: 70.029015, y: 74.52975, z: 8.798082}
+  m_LocalRotation: {x: -0.5893929, y: 0.0016959109, z: -0.0012331815, w: -0.8078438}
+  m_LocalPosition: {x: 35.01428, y: 38.01124, z: 5.019104}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

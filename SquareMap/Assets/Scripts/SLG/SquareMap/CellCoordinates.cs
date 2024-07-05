@@ -22,5 +22,14 @@ namespace JoyNow.SLG
         {
             return "(" + X + "," + Z + ")";
         }
+
+        public static CellCoordinates FromPosition(Vector3 position)
+        {
+            float x = position.x / (MapMetrics.CellEdgeLength);
+            float z = position.z / (MapMetrics.CellEdgeLength);
+            int iX = Mathf.RoundToInt(x);
+            int iZ = Mathf.RoundToInt(z);
+            return new CellCoordinates(iX, iZ);
+        }
     }
 }

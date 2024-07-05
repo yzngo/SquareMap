@@ -4,16 +4,21 @@ using UnityEngine;
 
 namespace JoyNow.SLG
 {
+    /// <summary>
+    /// 地图网格模型
+    /// </summary>
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class SquareMesh : MonoBehaviour
     {
         private Mesh squareMesh;
         private List<Vector3> vertices;
         private List<int> triangles;
+        private BoxCollider boxCollider;
 
         private void Awake()
         {
             GetComponent<MeshFilter>().mesh = squareMesh = new Mesh();
+            boxCollider = gameObject.AddComponent<BoxCollider>();
             squareMesh.name = "Square Mesh";
             vertices = new List<Vector3>();
             triangles = new List<int>();
@@ -31,8 +36,12 @@ namespace JoyNow.SLG
             squareMesh.vertices = vertices.ToArray();
             squareMesh.triangles = triangles.ToArray();
             squareMesh.RecalculateNormals();
+
+            // 设置碰撞体的大小和位置
+            boxCollider.size = new Vector3(MapMetrics.CellEdgeLength * SquareGrid.width, 0, MapMetrics.CellEdgeLength * SquareGrid.height);
+            boxCollider.center = new Vector3(boxCollider.size.x * 0.5f - MapMetrics.HalfCellEdgeLength, 0, boxCollider.size.z * 0.5f - MapMetrics.HalfCellEdgeLength);
         }
-        
+       
         private void Triangulate(SquareCell cell)
         {
             Vector3 center = cell.transform.localPosition;
