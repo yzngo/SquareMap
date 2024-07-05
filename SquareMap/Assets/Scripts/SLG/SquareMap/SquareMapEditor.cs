@@ -27,15 +27,23 @@ namespace JoyNow.SLG
             Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(inputRay, out var hit))
             {
-                var squareCell = squareGrid.TouchCell(hit.point);
-                EditorCell(squareCell);
+                SquareCell lastCell = squareGrid.SelectedCell;
+                var currentCell = squareGrid.TouchCell(hit.point);
+                if (lastCell != currentCell)
+                {
+                    if (lastCell != null)
+                    {
+                        lastCell.SetColor(Color.white);
+                    }
+                    currentCell.SetColor(Color.cyan);
+                    Debug.Log(currentCell.Coordinates.ToString());
+                }
             }
         }
 
         public void EditorCell(SquareCell cell)
         {
-            // cell.color = Color.cyan;
-            squareGrid.Refresh();
+            // cell.SetColor(Color.cyan);
         }
 
         public void SelectColor(int index)

@@ -7,6 +7,9 @@ namespace JoyNow.SLG
     /// </summary>
     public static class MapMetrics
     {
+        public static int ChunkSizeX = 10;
+        public static int ChunkSizeZ = 10;
+        
         public static float CellEdgeLength = 5;
 
         public static float HalfCellEdgeLength = 0.5f * CellEdgeLength;

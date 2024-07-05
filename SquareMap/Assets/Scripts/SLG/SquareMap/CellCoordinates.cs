@@ -43,8 +43,8 @@ namespace JoyNow.SLG
         /// </summary>
         public static CellCoordinates FromIndex(int index)
         {
-            int x = index % SquareGrid.width;
-            int z = index / SquareGrid.width;
+            int x = index % SquareGrid.cellCountX;
+            int z = index / SquareGrid.cellCountX;
             return new CellCoordinates(x, z);
         }
 
@@ -53,7 +53,7 @@ namespace JoyNow.SLG
         /// </summary>
         public static int ToIndex(CellCoordinates coordinates)
         {
-            return coordinates.X + coordinates.Z * SquareGrid.width;
+            return coordinates.X + coordinates.Z * SquareGrid.cellCountX;
         }
         
         /// <summary>
@@ -61,7 +61,7 @@ namespace JoyNow.SLG
         /// </summary>
         public static int ToIndex(int x, int z)
         {
-            return x + z * SquareGrid.width;
+            return x + z * SquareGrid.cellCountX;
         }
 
         /// <summary>

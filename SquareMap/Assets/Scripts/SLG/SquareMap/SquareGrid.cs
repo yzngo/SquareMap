@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace JoyNow.SLG
 {
@@ -9,36 +10,58 @@ namespace JoyNow.SLG
     /// </summary>
     public class SquareGrid : MonoBehaviour
     {
-        public const int width = 20;
-        public const int height = 15;
+        public int ChunkCountX = 10;
+        public int ChunkCountZ = 10;
+        
+        public static int cellCountX;
+        public static int cellCountZ;
 
         public SquareCell cellPrefab;
         public TextMeshProUGUI mapCellLabelPrefab;
-        private Canvas gridCanvas;
-        private SquareMesh squareMesh;
-
+        public SquareGridChunk chunkPrefab;
+        
+        private SquareGridChunk[] chunks;
         private SquareCell[] cells;
+        private BoxCollider boxCollider;
 
-        private SquareCell selectedCell;
+        public SquareCell SelectedCell;
 
         private void Awake()
         {
-            gridCanvas = GetComponentInChildren<Canvas>();
-            squareMesh = GetComponentInChildren<SquareMesh>();
-            cells = new SquareCell[width * height];
-            for (int z = 0, i = 0; z < height; z++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    CreateCell(x, z, i++);
+            cellCountX = ChunkCountX * MapMetrics.ChunkSizeX;
+            cellCountZ = ChunkCountZ * MapMetrics.ChunkSizeZ;
+            
+            CreateChunks();
+            CreateCells();
+            
+            // 设置碰撞体的大小和位置
+            boxCollider = gameObject.AddComponent<BoxCollider>();
+            boxCollider.size = new Vector3(MapMetrics.CellEdgeLength * SquareGrid.cellCountX, 0, MapMetrics.CellEdgeLength * SquareGrid.cellCountZ);
+            boxCollider.center = new Vector3(boxCollider.size.x * 0.5f - MapMetrics.HalfCellEdgeLength, 0, boxCollider.size.z * 0.5f - MapMetrics.HalfCellEdgeLength);
+        }
+
+        private void CreateChunks()
+        {
+            chunks = new SquareGridChunk[ChunkCountX * ChunkCountZ];
+            
+            for (int z = 0, i = 0; z < ChunkCountZ; z++) {
+                for (int x = 0; x < ChunkCountX; x++) {
+                    var chunk = chunks[i++] = Instantiate(chunkPrefab);
+                    chunk.transform.SetParent(transform);
                 }
             }
         }
 
-        private void Start()
+        private void CreateCells()
         {
-            // 在 squareMesh Awake 之后，三角化网格
-            squareMesh.Triangulate(cells);
+            cells = new SquareCell[cellCountX * cellCountZ];
+            for (int z = 0, i = 0; z < cellCountZ; z++)
+            {
+                for (int x = 0; x < cellCountX; x++)
+                {
+                    CreateCell(x, z, i++);
+                }
+            }
         }
 
         /// <summary>
@@ -56,36 +79,35 @@ namespace JoyNow.SLG
 
             SquareCell cell = cells[i] = Instantiate(cellPrefab);
             cell.Index = i;
-            cell.Coordinates = new CellCoordinates(x, z);
-            cell.transform.SetParent(transform, false);
             cell.transform.localPosition = position;
             cell.name = "Cell-" + cell.Index.ToString("0000") + "  (" + x + "," + z + ")";
             
             TextMeshProUGUI label = Instantiate(mapCellLabelPrefab);
-            label.rectTransform.SetParent(gridCanvas.transform, false);
             label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
             label.text = cell.Coordinates.ToString();
+            cell.uiRect = label.rectTransform;
+            
+            AddCellToChunk(x, z, cell);
+        }
+        
+        private void AddCellToChunk(int x, int z, SquareCell cell)
+        {
+            int chunkX = x / MapMetrics.ChunkSizeX;
+            int chunkZ = z / MapMetrics.ChunkSizeZ;
+            SquareGridChunk chunk = chunks[chunkX + chunkZ * ChunkCountX];
+            int localX = x - chunkX * MapMetrics.ChunkSizeX;
+            int localZ = z - chunkZ * MapMetrics.ChunkSizeZ;
+            chunk.AddCell(localX + localZ * MapMetrics.ChunkSizeX, cell);
         }
 
         public SquareCell TouchCell(Vector3 position)
         {
             position = transform.InverseTransformPoint(position);
             int index = CellCoordinates.ToIndex(position);
-            SquareCell cell = cells[index];
-            if (selectedCell != null)
-            {
-                selectedCell.color = Color.white;
-            }
-            selectedCell = cell;
-            cell.color = Color.cyan;
-            return selectedCell;
+            SelectedCell = cells[index];
+            return cells[index];
         }
 
-        public void Refresh()
-        {
-            squareMesh.Triangulate(cells);
-        }
-        
         public SquareCell GetNeighbor(SquareCell squareCell, SquareDirection squareDirection)
         {
             int x =  squareCell.Coordinates.X;
@@ -105,7 +127,7 @@ namespace JoyNow.SLG
                     x -= 1;
                     break;
             }
-            if (x < 0 || x >= SquareGrid.width || z < 0 || z >= SquareGrid.height)
+            if (x < 0 || x >= SquareGrid.cellCountX || z < 0 || z >= SquareGrid.cellCountZ)
             {
                 return null;
             }
