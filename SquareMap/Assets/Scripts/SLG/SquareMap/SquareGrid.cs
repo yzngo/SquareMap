@@ -12,9 +12,6 @@ namespace JoyNow.SLG
         public const int width = 20;
         public const int height = 15;
 
-        public Color defaultColor = Color.white;
-        public Color touchedColor = Color.cyan;
-        
         public SquareCell cellPrefab;
         public TextMeshProUGUI mapCellLabelPrefab;
         private Canvas gridCanvas;
@@ -60,7 +57,6 @@ namespace JoyNow.SLG
             SquareCell cell = cells[i] = Instantiate(cellPrefab);
             cell.Index = i;
             cell.Coordinates = new CellCoordinates(x, z);
-            cell.color = defaultColor;
             cell.transform.SetParent(transform, false);
             cell.transform.localPosition = position;
             cell.name = "Cell-" + cell.Index.ToString("0000") + "  (" + x + "," + z + ")";
@@ -71,25 +67,17 @@ namespace JoyNow.SLG
             label.text = cell.Coordinates.ToString();
         }
 
-        private void TouchCell(Vector3 position)
+        public SquareCell TouchCell(Vector3 position)
         {
             position = transform.InverseTransformPoint(position);
             int index = CellCoordinates.ToIndex(position);
             SquareCell cell = cells[index];
             if (selectedCell != null)
             {
-                selectedCell.color = defaultColor;
+                selectedCell.color = Color.white;
             }
             selectedCell = cell;
-            cell.color = touchedColor;
-            squareMesh.Triangulate(cells);
-        }
-
-        public SquareCell GetCell(Vector3 position)
-        {
-            position = transform.InverseTransformPoint(position);
-            int index = CellCoordinates.ToIndex(position);
-            selectedCell = cells[index];
+            cell.color = Color.cyan;
             return selectedCell;
         }
 

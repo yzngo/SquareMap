@@ -11,8 +11,14 @@ namespace JoyNow.SLG
         
         public CellCoordinates Coordinates;
 
-        public Color color;
+        public Color color = Color.white;
 
-        public bool[] EdgePassable = new bool[4];
+        [SerializeField]
+        private bool[] EdgePassable = new bool[] {true, true, true, true};
+        
+        public bool IsEdgePassable(SquareDirection direction)
+        {
+            return EdgePassable[(int) direction];
+        }
     }
 }

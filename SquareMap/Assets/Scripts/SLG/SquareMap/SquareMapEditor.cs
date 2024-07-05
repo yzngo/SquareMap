@@ -6,9 +6,7 @@ namespace JoyNow.SLG
 {
     public class SquareMapEditor : MonoBehaviour
     {
-        public Color[] colors;
         public SquareGrid squareGrid;
-        private Color activeColor;
 
         private void Awake()
         {
@@ -29,20 +27,20 @@ namespace JoyNow.SLG
             Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(inputRay, out var hit))
             {
-                var squareCell = squareGrid.GetCell(hit.point);
+                var squareCell = squareGrid.TouchCell(hit.point);
                 EditorCell(squareCell);
             }
         }
 
         public void EditorCell(SquareCell cell)
         {
-            cell.color = activeColor;
+            // cell.color = Color.cyan;
             squareGrid.Refresh();
         }
 
         public void SelectColor(int index)
         {
-            activeColor = colors[index];
+            // activeColor = colors[index];
         }
     }
 }

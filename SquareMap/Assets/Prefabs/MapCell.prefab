@@ -44,3 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5833d8a2abc74f04b6bed81ab4674ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Index: 0
+  Coordinates:
+    x: 0
+    z: 0
+  color: {r: 1, g: 1, b: 1, a: 1}
+  EdgePassable: 00000000
