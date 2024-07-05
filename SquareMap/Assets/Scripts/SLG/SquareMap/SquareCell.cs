@@ -11,6 +11,8 @@ namespace JoyNow.SLG
         
         public CellCoordinates Coordinates;
 
+        public Vector3 Position => transform.localPosition;
+
         public Color color = Color.white;
 
         [SerializeField]
