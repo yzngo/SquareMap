@@ -73,6 +73,33 @@ namespace JoyNow.SLG
         {
             return ToIndex(FromPosition(position));
         }
+
+        public static bool operator ==(CellCoordinates a, CellCoordinates b)
+        {
+            return a.X == b.X && a.Z == b.Z;
+        }
         
+        public static bool operator !=(CellCoordinates a, CellCoordinates b)
+        {
+            return a.X != b.X || a.Z != b.Z;
+        }
+        
+        public override bool Equals(object obj)
+        {
+            if (obj is CellCoordinates other)
+            {
+                return X == other.X && Z == other.Z;
+            }
+            return false;
+        }
+        
+
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            hash = hash * 23 + X;
+            hash = hash * 23 + Z;
+            return hash;
+        }
     }
 }

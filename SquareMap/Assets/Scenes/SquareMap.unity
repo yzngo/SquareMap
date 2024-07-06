@@ -765,6 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   squareGrid: {fileID: 1362028297}
+  brushSize: 1
 --- !u!114 &755375363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,6 +899,7 @@ MonoBehaviour:
   swivelMinZoom: 45
   swivelMaxZoom: 45
   zoom: 0.2
+  grid: {fileID: 1362028297}
 --- !u!1 &1276947200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,6 +1030,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChunkCountX: 5
   ChunkCountZ: 5
+  gridWidth: 0
+  gridHeight: 0
   cellPrefab: {fileID: 5510446589247293727, guid: 2b31f18bfe3c20946a787f6605d93618, type: 3}
   mapCellLabelPrefab: {fileID: 4321234663250024146, guid: 98c54e0e129600d47806496cfbf5569d, type: 3}
   chunkPrefab: {fileID: 6187140480205938252, guid: b3eb000578e644444b774cf2d0c64d8a, type: 3}
@@ -1700,7 +1704,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 3.4e-44, z: 0, w: NaN}
+  m_BoundingSphereOverride: {x: 1.02e-43, y: 0, z: 0, w: -7.401357e+17}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0

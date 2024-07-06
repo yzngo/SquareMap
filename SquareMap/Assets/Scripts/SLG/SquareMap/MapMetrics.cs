@@ -7,14 +7,22 @@ namespace JoyNow.SLG
     /// </summary>
     public static class MapMetrics
     {
+        // 每个 Chunk x 方向格子数量 
         public static int ChunkSizeX = 10;
+        // 每个 Chunk z 方向格子数量 
         public static int ChunkSizeZ = 10;
         
+        // 格子边长
         public static float CellEdgeLength = 5;
-
+        // 格子边长的一半
         public static float HalfCellEdgeLength = 0.5f * CellEdgeLength;
+        // 格子对角线长度
+        public static float CellDiagonalLength = Mathf.Sqrt(2) * CellEdgeLength;
+        // 格子对角线长度的一半
+        public static float HalfCellDiagonalLength = 0.5f * CellDiagonalLength;
+        
 
-        private static Vector3[] cellCorners =
+        private static Vector3[] cellCornersLocation =
         {
             new Vector3(-HalfCellEdgeLength, 0, HalfCellEdgeLength),
             new Vector3(HalfCellEdgeLength, 0, HalfCellEdgeLength),
@@ -25,12 +33,12 @@ namespace JoyNow.SLG
 
         public static Vector3 GetFirstCorner(SquareDirection direction)
         {
-            return cellCorners[(int)direction];
+            return cellCornersLocation[(int)direction];
         }
         
         public static Vector3 GetSecondCorner(SquareDirection direction)
         {
-            return cellCorners[(int)direction + 1];
+            return cellCornersLocation[(int)direction + 1];
         }
 
     }

@@ -34,5 +34,10 @@ namespace JoyNow.SLG
             squareMesh.Triangulate(cells);
             enabled = false;
         }
+        
+        public void ShowUI(bool visible)
+        {
+            gridCanvas.gameObject.SetActive(visible);
+        }
     }
 }

@@ -6,12 +6,11 @@ namespace JoyNow.SLG
 {
     public class SquareCell : MonoBehaviour
     {
-        // yzntodo 设置成不可编辑 
+        // yzntodo inspector 设置成不可编辑 
         public int Index;
-        
         public CellCoordinates Coordinates => CellCoordinates.FromIndex(Index);
-
         public Vector3 Position => transform.localPosition;
+        
 
         public Color color = Color.white;
 
@@ -38,5 +37,6 @@ namespace JoyNow.SLG
         {
             chunk?.Refresh();
         }
+
     }
 }

@@ -1,12 +1,16 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace JoyNow.SLG
 {
     public class SquareMapEditor : MonoBehaviour
     {
         public SquareGrid squareGrid;
+        
+        [Range(1, 5)] 
+        public int brushExtendSize = 1;
 
         private void Awake()
         {
@@ -27,28 +31,59 @@ namespace JoyNow.SLG
             Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(inputRay, out var hit))
             {
-                SquareCell lastCell = squareGrid.SelectedCell;
-                var currentCell = squareGrid.TouchCell(hit.point);
-                if (lastCell != currentCell)
+                // SquareCell lastCell = squareGrid.SelectedCell;
+                // var currentCell = squareGrid.TouchCell(hit.point);
+                // if (lastCell != currentCell)
+                // {
+                //     if (lastCell != null)
+                //     {
+                //         lastCell.SetColor(Color.white);
+                //     }
+                //     currentCell.SetColor(Color.cyan);
+                //     Debug.Log(currentCell.Coordinates.ToString());
+                // }
+                var cell = squareGrid.GetCell(hit.point);
+                EditorCells(cell);
+            }
+        }
+
+        public void EditorCells(SquareCell center)
+        {
+            int centerX = center.Coordinates.X;
+            int centerZ = center.Coordinates.Z;
+            for (int z = centerZ - brushExtendSize; z <= centerZ + brushExtendSize; z++)
+            {
+                for (int x = centerX - brushExtendSize; x <= centerX + brushExtendSize; x++)
                 {
-                    if (lastCell != null)
+                    var coordinates = new CellCoordinates(x, z);
+                    var cell = squareGrid.GetCell(coordinates);
+                    if (cell != null)
                     {
-                        lastCell.SetColor(Color.white);
+                        EditorCell(cell);
                     }
-                    currentCell.SetColor(Color.cyan);
-                    Debug.Log(currentCell.Coordinates.ToString());
+                
                 }
             }
         }
 
         public void EditorCell(SquareCell cell)
         {
-            // cell.SetColor(Color.cyan);
+            cell.SetColor(Color.cyan);
         }
 
         public void SelectColor(int index)
         {
             // activeColor = colors[index];
+        }
+
+        public void SetBrushSize(int size)
+        {
+            brushExtendSize = size;
+        }
+
+        public void ShowUI(bool visible)
+        {
+            squareGrid.ShowUI(visible);
         }
     }
 }

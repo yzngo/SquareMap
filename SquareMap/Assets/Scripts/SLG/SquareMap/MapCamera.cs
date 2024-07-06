@@ -12,6 +12,7 @@ namespace JoyNow.SLG
         public float swivelMinZoom = 70;
         public float swivelMaxZoom = 45;
         public float zoom = 0.2f;
+        public SquareGrid grid;
         
         private Transform swivel;
         private Transform stick;
@@ -54,7 +55,17 @@ namespace JoyNow.SLG
         
         private void AdjustPosition(float xDelta, float yDelta)
         {
-            stick.localPosition += new Vector3(xDelta, yDelta, 0) * moveSpeed;
+            Vector3 offset = new Vector3(xDelta, yDelta, 0) * moveSpeed;
+            Vector3 position = stick.localPosition + offset;
+            stick.localPosition = ClampPosition(position);
+        }
+        
+        private Vector3 ClampPosition(Vector3 position)
+        {
+            float xMin = -MapMetrics.HalfCellDiagonalLength;
+            float xMax = Mathf.Sqrt(grid.gridWidth * grid.gridWidth + grid.gridHeight * grid.gridHeight) - MapMetrics.HalfCellDiagonalLength;
+            position.x = Mathf.Clamp(position.x, xMin, xMax);
+            return position;
         }
     }
 }
