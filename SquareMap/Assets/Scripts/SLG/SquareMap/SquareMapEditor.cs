@@ -9,8 +9,8 @@ namespace JoyNow.SLG
     {
         public SquareGrid squareGrid;
         
-        [Range(1, 5)] 
-        public int brushExtendSize = 1;
+        [Range(0, 5)] 
+        public int brushExtendSize = 0;
 
         private void Awake()
         {

@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   squareGrid: {fileID: 1362028297}
-  brushSize: 1
+  brushExtendSize: 1
 --- !u!114 &755375363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,8 +1028,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6700b6f16c445bea3f68ca016441852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChunkCountX: 5
-  ChunkCountZ: 5
+  ChunkCountX: 10
+  ChunkCountZ: 10
   gridWidth: 0
   gridHeight: 0
   cellPrefab: {fileID: 5510446589247293727, guid: 2b31f18bfe3c20946a787f6605d93618, type: 3}
