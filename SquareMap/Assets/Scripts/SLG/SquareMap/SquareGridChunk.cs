@@ -21,7 +21,7 @@ namespace JoyNow.SLG
             cells[index] = cell;
             cell.chunk = this;
             cell.transform.SetParent(transform, false);
-            cell.uiRect.SetParent(gridCanvas.transform, false);
+            cell.uiLabel.transform.SetParent(gridCanvas.transform, false);
         }
 
         public void Refresh()

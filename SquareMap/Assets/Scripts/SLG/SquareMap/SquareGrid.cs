@@ -10,6 +10,7 @@ namespace JoyNow.SLG
     /// </summary>
     public class SquareGrid : MonoBehaviour
     {
+        public static SquareGrid Instance;
         // x 方向 Chunk 数量
         public int ChunkCountX = 10;
         // z 方向 Chunk 数量
@@ -28,14 +29,16 @@ namespace JoyNow.SLG
         public TextMeshProUGUI mapCellLabelPrefab;
         public SquareGridChunk chunkPrefab;
         
-        private SquareGridChunk[] chunks;
-        private SquareCell[] cells;
+        public SquareGridChunk[] Chunks { get; private set; }
+        public SquareCell[] Cells { get; private set; }
+        
         private BoxCollider boxCollider;
 
         public SquareCell SelectedCell;
 
         private void Awake()
         {
+            Instance = this;
             cellCountX = ChunkCountX * MapMetrics.ChunkSizeX;
             cellCountZ = ChunkCountZ * MapMetrics.ChunkSizeZ;
             
@@ -54,11 +57,11 @@ namespace JoyNow.SLG
 
         private void CreateChunks()
         {
-            chunks = new SquareGridChunk[ChunkCountX * ChunkCountZ];
+            Chunks = new SquareGridChunk[ChunkCountX * ChunkCountZ];
             
             for (int z = 0, i = 0; z < ChunkCountZ; z++) {
                 for (int x = 0; x < ChunkCountX; x++) {
-                    var chunk = chunks[i++] = Instantiate(chunkPrefab);
+                    var chunk = Chunks[i++] = Instantiate(chunkPrefab);
                     chunk.transform.SetParent(transform);
                 }
             }
@@ -66,7 +69,7 @@ namespace JoyNow.SLG
 
         private void CreateCells()
         {
-            cells = new SquareCell[cellCountX * cellCountZ];
+            Cells = new SquareCell[cellCountX * cellCountZ];
             for (int z = 0, i = 0; z < cellCountZ; z++)
             {
                 for (int x = 0; x < cellCountX; x++)
@@ -89,15 +92,14 @@ namespace JoyNow.SLG
             position.y = 0f;
             position.z = z * MapMetrics.CellEdgeLength;
 
-            SquareCell cell = cells[i] = Instantiate(cellPrefab);
+            SquareCell cell = Cells[i] = Instantiate(cellPrefab);
             cell.Index = i;
             cell.transform.localPosition = position;
             cell.name = "Cell-" + cell.Index.ToString("0000") + "  (" + x + "," + z + ")";
             
             TextMeshProUGUI label = Instantiate(mapCellLabelPrefab);
+            cell.uiLabel = label;
             label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
-            label.text = cell.Coordinates.ToString();
-            cell.uiRect = label.rectTransform;
             
             AddCellToChunk(x, z, cell);
         }
@@ -106,7 +108,7 @@ namespace JoyNow.SLG
         {
             int chunkX = x / MapMetrics.ChunkSizeX;
             int chunkZ = z / MapMetrics.ChunkSizeZ;
-            SquareGridChunk chunk = chunks[chunkX + chunkZ * ChunkCountX];
+            SquareGridChunk chunk = Chunks[chunkX + chunkZ * ChunkCountX];
             int localX = x - chunkX * MapMetrics.ChunkSizeX;
             int localZ = z - chunkZ * MapMetrics.ChunkSizeZ;
             chunk.AddCell(localX + localZ * MapMetrics.ChunkSizeX, cell);
@@ -119,11 +121,11 @@ namespace JoyNow.SLG
 
         public SquareCell GetCell(int index)
         {
-            if (index < 0 || index >= cells.Length)
+            if (index < 0 || index >= Cells.Length)
             {
                 return null;
             }
-            return cells[index];
+            return Cells[index];
         }
 
         public SquareCell GetCell(Vector3 position)
@@ -133,37 +135,13 @@ namespace JoyNow.SLG
             return GetCell(index);
         }
 
-        public SquareCell GetNeighbor(SquareCell squareCell, SquareDirection squareDirection)
-        {
-            int x =  squareCell.Coordinates.X;
-            int z =  squareCell.Coordinates.Z;
-            switch (squareDirection)
-            {
-                case SquareDirection.North:
-                    z += 1;
-                    break;
-                case SquareDirection.East:
-                    x += 1;
-                    break;
-                case SquareDirection.South:
-                    z -= 1;
-                    break;
-                case SquareDirection.West:
-                    x -= 1;
-                    break;
-            }
-            if (x < 0 || x >= SquareGrid.cellCountX || z < 0 || z >= SquareGrid.cellCountZ)
-            {
-                return null;
-            }
-            return cells[CellCoordinates.ToIndex(x, z)];       
-        }
+
 
         public void ShowUI(bool visible)
         {
-            for (int i = 0; i < chunks.Length; i++)
+            for (int i = 0; i < Chunks.Length; i++)
             {
-                chunks[i].ShowUI(visible);
+                Chunks[i].ShowUI(visible);
             }
         }
     }

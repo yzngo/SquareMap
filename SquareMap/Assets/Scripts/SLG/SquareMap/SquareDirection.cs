@@ -1,11 +1,11 @@
 ﻿namespace JoyNow.SLG
 {
-    public enum SquareDirection
+    public enum SquareDirection : byte
     {
-        North,
-        East,
-        South,
-        West
+        North = 0,
+        East = 1,
+        South = 2,
+        West = 3,
     }
     
     public static class SquareDirectionExtensions

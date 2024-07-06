@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace JoyNow.SLG
 {
@@ -11,9 +12,10 @@ namespace JoyNow.SLG
     public class SquareMesh : MonoBehaviour
     {
         private Mesh squareMesh;
-        private static List<Vector3> vertices = new();
-        private static List<Color> colors = new();
-        private static List<int> triangles = new();
+        private List<Vector3> vertices;
+        private List<Color> colors;
+        private List<int> triangles;
+        private List<Vector2> uvs;
         
 
         private void Awake()
@@ -25,6 +27,10 @@ namespace JoyNow.SLG
         public void Triangulate(SquareCell[] cells)
         {
             squareMesh.Clear();
+            vertices = ListPool<Vector3>.Get();
+            colors = ListPool<Color>.Get();
+            triangles = ListPool<int>.Get();
+            uvs = ListPool<Vector2>.Get();
             vertices.Clear();
             colors.Clear();
             triangles.Clear();
@@ -32,9 +38,13 @@ namespace JoyNow.SLG
             {
                 Triangulate(cells[i]);
             }
-            squareMesh.vertices = vertices.ToArray();
-            squareMesh.colors = colors.ToArray();
-            squareMesh.triangles = triangles.ToArray();
+            squareMesh.SetVertices(vertices);
+            squareMesh.SetColors(colors);
+            squareMesh.SetTriangles(triangles, 0);
+            ListPool<Vector3>.Release(vertices);
+            ListPool<Color>.Release(colors);
+            ListPool<int>.Release(triangles);
+            ListPool<Vector2>.Release(uvs);
             squareMesh.RecalculateNormals();
         }
        
@@ -43,19 +53,32 @@ namespace JoyNow.SLG
             Vector3 center = cell.Position;
             
             int vertexIndex = vertices.Count;
+            // 添加顶点和颜色
             for(var d = SquareDirection.North; d <= SquareDirection.West; d++)
             {
                 vertices.Add(center + MapMetrics.GetFirstCorner(d));
-                colors.Add(cell.color);
+                colors.Add(cell.TerrainType.GetColorTip());
             }
-            
-            triangles.Add(vertexIndex);
-            triangles.Add(vertexIndex + 1);
-            triangles.Add(vertexIndex + 2);
-            
-            triangles.Add(vertexIndex);
-            triangles.Add(vertexIndex + 2);
-            triangles.Add(vertexIndex + 3);
+            // 添加 UV
+            AddUV(new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 1));
+            AddUV(new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, 0));
+            // 添加三角形索引
+            AddTriangle(vertexIndex, vertexIndex + 1, vertexIndex + 2);
+            AddTriangle(vertexIndex, vertexIndex + 2, vertexIndex + 3);
+        }
+
+        private void AddUV(Vector2 uv1, Vector2 uv2, Vector2 uv3)
+        {
+            uvs.Add(uv1);
+            uvs.Add(uv2);
+            uvs.Add(uv3);
+        }
+        
+        private void AddTriangle(int vertexIndex1, int vertexIndex2, int vertexIndex3)
+        {
+            triangles.Add(vertexIndex1);
+            triangles.Add(vertexIndex2);
+            triangles.Add(vertexIndex3);
         }
     }
 }

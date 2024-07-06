@@ -1,7 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace JoyNow.SLG
 {
@@ -11,10 +9,11 @@ namespace JoyNow.SLG
         
         [Range(0, 5)] 
         public int brushExtendSize = 0;
+        
+        public CellTerrainType activeTerrainType = CellTerrainType.Default;
 
         private void Awake()
         {
-            SelectColor(0);
         }
 
         private void Update()
@@ -68,12 +67,7 @@ namespace JoyNow.SLG
 
         public void EditorCell(SquareCell cell)
         {
-            cell.SetColor(Color.cyan);
-        }
-
-        public void SelectColor(int index)
-        {
-            // activeColor = colors[index];
+            cell.SetTerrainType(activeTerrainType);
         }
 
         public void SetBrushSize(int size)
