@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   squareGrid: {fileID: 1362028297}
-  brushExtendSize: 1
+  brushExtendSize: 0
 --- !u!114 &755375363
 MonoBehaviour:
   m_ObjectHideFlags: 0
