@@ -16,10 +16,7 @@ namespace JoyNow.SLG
 
         public int CellFeatureId = -1;      // CellFeatureConfig
 
-        public bool IsInteractable = true;
-        
         public CellStates CellStates;
-        
         
         public TextMeshProUGUI uiLabel;
 
@@ -37,7 +34,7 @@ namespace JoyNow.SLG
         {
             Index = index;
             SetTerrainType(CellTerrainType.Plain);
-            CellStates.HasState(CellStates.Interactable);
+            CellStates.AddState(CellStates.Interactable);
         }
         
         
