@@ -60,25 +60,20 @@ namespace JoyNow.SLG
                 colors.Add(cell.TerrainType.GetColorTip());
             }
             // 添加 UV
-            AddUV(new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 1));
-            AddUV(new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, 0));
+            uvs.Add(new Vector2(1, 0));
+            uvs.Add(new Vector2(1, 1));
+            uvs.Add(new Vector2(0, 1));
+            uvs.Add(new Vector2(0, 0));
+            
             // 添加三角形索引
-            AddTriangle(vertexIndex, vertexIndex + 1, vertexIndex + 2);
-            AddTriangle(vertexIndex, vertexIndex + 2, vertexIndex + 3);
+            triangles.Add(vertexIndex);
+            triangles.Add(vertexIndex + 1);
+            triangles.Add(vertexIndex + 2);
+            
+            triangles.Add(vertexIndex);
+            triangles.Add(vertexIndex + 2);
+            triangles.Add(vertexIndex + 3);
         }
 
-        private void AddUV(Vector2 uv1, Vector2 uv2, Vector2 uv3)
-        {
-            uvs.Add(uv1);
-            uvs.Add(uv2);
-            uvs.Add(uv3);
-        }
-        
-        private void AddTriangle(int vertexIndex1, int vertexIndex2, int vertexIndex3)
-        {
-            triangles.Add(vertexIndex1);
-            triangles.Add(vertexIndex2);
-            triangles.Add(vertexIndex3);
-        }
     }
 }

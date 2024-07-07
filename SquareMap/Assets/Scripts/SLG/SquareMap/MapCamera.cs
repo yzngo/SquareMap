@@ -6,7 +6,7 @@ namespace JoyNow.SLG
 {
     public class MapCamera : MonoBehaviour
     {
-        public const float moveSpeed = 0.1f;
+        public const float moveSpeed = 0.05f;
         public const float cameraMinSize = 5;
         public const float cameraMaxSize = 100;
         // 缩放时同时旋转角度，越远越平
