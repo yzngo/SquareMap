@@ -80,5 +80,14 @@ namespace JoyNow.SLG
         {
             squareGrid.ShowUI(visible);
         }
+
+        public void Save()
+        {
+        }
+
+        public void Load()
+        {
+            
+        }
     }
 }

@@ -35,19 +35,19 @@ namespace JoyNow.SLG
         }
         
         
-        public static string GetName(this CellTerrainType terrainType)
-        {
-            string name = terrainType switch
-            {
-                CellTerrainType.Plain => "平原",
-                CellTerrainType.Water => "水面",
-                CellTerrainType.Lawn => "草地",
-                CellTerrainType.Mountain => "山脉",
-                CellTerrainType.Building => "建筑",
-                CellTerrainType.Forest => "森林",
-                _ => ""
-            };
-            return name;
-        }
+        // public static string GetName(this CellTerrainType terrainType)
+        // {
+        //     string name = terrainType switch
+        //     {
+        //         CellTerrainType.Plain => "平原",
+        //         CellTerrainType.Water => "水面",
+        //         CellTerrainType.Lawn => "草地",
+        //         CellTerrainType.Mountain => "山脉",
+        //         CellTerrainType.Building => "建筑",
+        //         CellTerrainType.Forest => "森林",
+        //         _ => ""
+        //     };
+        //     return name;
+        // }
     }
 }
