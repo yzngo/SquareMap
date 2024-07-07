@@ -28,6 +28,7 @@ namespace JoyNow.SLG
             }
         }
         
+        // 摆放在地图上的建筑等，增加地图趣味性，没有实际用处
         private int cellFeatureId = -1;  // CellFeatureConfig
 
         public int CellFeatureId
@@ -41,6 +42,7 @@ namespace JoyNow.SLG
                 }
             }
         }
+        
 
         public CellStates CellStates;
         
