@@ -8,8 +8,11 @@ namespace JoyNow.SLG
     /// <summary>
     /// 管理四边形网格
     /// </summary>
+    [Serializable]
     public class SquareGrid : MonoBehaviour
     {
+        
+        
         public static SquareGrid Instance;
         [Range(1, 12)]
         // x 方向 Chunk 数量
@@ -55,6 +58,7 @@ namespace JoyNow.SLG
             boxCollider = gameObject.AddComponent<BoxCollider>();
             boxCollider.size = new Vector3(GridWidth, 0, GridHeight);
             boxCollider.center = new Vector3(GridWidth * 0.5f - MapMetrics.HalfCellEdgeLength, 0, GridHeight * 0.5f - MapMetrics.HalfCellEdgeLength);
+
         }
 
         private void CreateChunks()
@@ -143,6 +147,47 @@ namespace JoyNow.SLG
             for (int i = 0; i < Chunks.Length; i++)
             {
                 Chunks[i].ShowUI(visible);
+            }
+        }
+
+        /// <summary>
+        /// todo 保存地图数据, 换成 protobuf
+        /// </summary>
+        /// <returns></returns>
+        public string GetSaveData()
+        {
+            GridConfigData gridConfigData = new ()
+            {
+                ChunkCountX = ChunkCountX,
+                ChunkCountZ = ChunkCountZ,
+                CellConfigDatas = new CellConfigData[cellCountX * cellCountZ]
+            };
+
+            for (int i = 0; i < Cells.Length; i++)
+            {
+                var data = gridConfigData.CellConfigDatas[i] = new ();
+                var cell = Cells[i];
+                data.Index = cell.Index;
+                data.TerrainType = cell.TerrainType;
+                data.CellFeatureId = cell.CellFeatureId;
+                data.CellStates = cell.CellStates;
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(gridConfigData);
+        }
+
+        public void LoadSaveData(string data)
+        {
+            var config = Newtonsoft.Json.JsonConvert.DeserializeObject<GridConfigData>(data);
+            ChunkCountX = config.ChunkCountX;
+            ChunkCountZ = config.ChunkCountZ;
+            for (int i = 0; i < Cells.Length; i++)
+            {
+                var cell = Cells[i];
+                var dataConfig = config.CellConfigDatas[i];
+                cell.Index = dataConfig.Index;
+                cell.TerrainType = dataConfig.TerrainType;
+                cell.CellFeatureId = dataConfig.CellFeatureId;
+                cell.CellStates = dataConfig.CellStates;
             }
         }
     }

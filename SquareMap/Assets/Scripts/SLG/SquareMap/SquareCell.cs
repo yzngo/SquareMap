@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,7 +10,9 @@ namespace JoyNow.SLG
     {
         // yzntodo inspector 设置成不可编辑 
         public int Index;
+        [JsonIgnore]
         public CellCoordinates Coordinates => CellCoordinates.FromIndex(Index);
+        [JsonIgnore]
         public Vector3 Position => transform.localPosition;
         
         private CellTerrainType terrainType = CellTerrainType.Plain;
@@ -46,8 +49,10 @@ namespace JoyNow.SLG
 
         public CellStates CellStates;
         
+        [JsonIgnore]
         public TextMeshProUGUI uiLabel;
 
+        [JsonIgnore]
         public SquareGridChunk chunk;
 
         [SerializeField]

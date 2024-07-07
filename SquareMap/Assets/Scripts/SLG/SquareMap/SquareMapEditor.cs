@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using System.Text;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace JoyNow.SLG
@@ -83,11 +85,17 @@ namespace JoyNow.SLG
 
         public void Save()
         {
+            string path = Path.Combine(Application.dataPath, "Maps", "map-1.json");
+            using StreamWriter sw = File.CreateText(path);
+            string data = squareGrid.GetSaveData();
+            sw.Write(data);
         }
 
         public void Load()
         {
-            
+            string path = Path.Combine(Application.dataPath, "Maps", "map-1.json");
+            string data = File.ReadAllText(path, Encoding.UTF8);
+            squareGrid.LoadSaveData(data);
         }
     }
 }
