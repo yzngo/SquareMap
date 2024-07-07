@@ -7,8 +7,8 @@ namespace JoyNow.SLG
     public class MapCamera : MonoBehaviour
     {
         public float moveSpeed = 1;
-        public float cameraMinSize = 10;
-        public float cameraMaxSize = 33;
+        public float cameraMinSize = 5;
+        public float cameraMaxSize = 50;
         public float swivelMinZoom = 70;
         public float swivelMaxZoom = 45;
         public float zoom = 0.2f;

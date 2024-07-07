@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 namespace JoyNow.SLG
 {
     /// <summary>
-    /// 地图网格模型
+    /// 地图模型
     /// </summary>
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class SquareMesh : MonoBehaviour

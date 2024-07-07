@@ -895,8 +895,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
-  cameraMinSize: 10
-  cameraMaxSize: 35
+  cameraMinSize: 5
+  cameraMaxSize: 50
   swivelMinZoom: 45
   swivelMaxZoom: 45
   zoom: 0.2
@@ -1736,7 +1736,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 805.6321, y: 1.499385e+10, z: 7.31611e+28, w: 3.993084e+24}
+  m_BoundingSphereOverride: {x: 1.02e-43, y: 0, z: 0, w: -7.401357e+17}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0

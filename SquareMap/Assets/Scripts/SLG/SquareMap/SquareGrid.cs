@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 namespace JoyNow.SLG
 {
     /// <summary>
-    /// 管理网格
+    /// 管理四边形网格
     /// </summary>
     public class SquareGrid : MonoBehaviour
     {
