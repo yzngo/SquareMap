@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   squareGrid: {fileID: 1362028297}
-  brushExtendSize: 0
+  brushExtendSize: 4
   activeTerrainType: 2
 --- !u!114 &755375363
 MonoBehaviour:
@@ -894,12 +894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845ce44cfe894ecc88bbc3451021428a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.5
-  cameraMinSize: 5
-  cameraMaxSize: 50
-  swivelMinZoom: 45
-  swivelMaxZoom: 45
-  zoom: 0.2
   grid: {fileID: 1362028297}
 --- !u!1 &1276947200
 GameObject:
@@ -1029,14 +1023,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6700b6f16c445bea3f68ca016441852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChunkCountX: 3
-  ChunkCountZ: 3
-  gridWidth: 0
-  gridHeight: 0
+  ChunkCountX: 2
+  ChunkCountZ: 2
   cellPrefab: {fileID: 5510446589247293727, guid: 2b31f18bfe3c20946a787f6605d93618, type: 3}
   mapCellLabelPrefab: {fileID: 4321234663250024146, guid: 98c54e0e129600d47806496cfbf5569d, type: 3}
   chunkPrefab: {fileID: 6187140480205938252, guid: b3eb000578e644444b774cf2d0c64d8a, type: 3}
-  SelectedCell: {fileID: 0}
 --- !u!4 &1362028298
 Transform:
   m_ObjectHideFlags: 0
@@ -1076,7 +1067,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431275534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -200}
+  m_LocalPosition: {x: 0, y: 0, z: -400}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

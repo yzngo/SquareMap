@@ -11,8 +11,10 @@ namespace JoyNow.SLG
     public class SquareGrid : MonoBehaviour
     {
         public static SquareGrid Instance;
+        [Range(1, 12)]
         // x 方向 Chunk 数量
         public int ChunkCountX = 10;
+        [Range(1, 12)]
         // z 方向 Chunk 数量
         public int ChunkCountZ = 10;
         // x 方向格子数量
@@ -20,9 +22,9 @@ namespace JoyNow.SLG
         // z 方向格子数量
         public static int cellCountZ;
         // 格子宽度
-        public float gridWidth;
+        public float GridWidth { get; private set; }
         // 格子高度
-        public float gridHeight;
+        public float GridHeight { get; private set; }
         
 
         public SquareCell cellPrefab;
@@ -34,7 +36,7 @@ namespace JoyNow.SLG
         
         private BoxCollider boxCollider;
 
-        public SquareCell SelectedCell;
+        public SquareCell SelectedCell { get; set; }
 
         private void Awake()
         {
@@ -42,8 +44,8 @@ namespace JoyNow.SLG
             cellCountX = ChunkCountX * MapMetrics.ChunkSizeX;
             cellCountZ = ChunkCountZ * MapMetrics.ChunkSizeZ;
             
-            gridWidth = cellCountX * MapMetrics.CellEdgeLength; 
-            gridHeight = cellCountZ * MapMetrics.CellEdgeLength;
+            GridWidth = cellCountX * MapMetrics.CellEdgeLength; 
+            GridHeight = cellCountZ * MapMetrics.CellEdgeLength;
             
             CreateChunks();
             CreateCells();
@@ -51,8 +53,8 @@ namespace JoyNow.SLG
             // 设置碰撞体的大小和位置
             
             boxCollider = gameObject.AddComponent<BoxCollider>();
-            boxCollider.size = new Vector3(gridWidth, 0, gridHeight);
-            boxCollider.center = new Vector3(gridWidth * 0.5f - MapMetrics.HalfCellEdgeLength, 0, gridHeight * 0.5f - MapMetrics.HalfCellEdgeLength);
+            boxCollider.size = new Vector3(GridWidth, 0, GridHeight);
+            boxCollider.center = new Vector3(GridWidth * 0.5f - MapMetrics.HalfCellEdgeLength, 0, GridHeight * 0.5f - MapMetrics.HalfCellEdgeLength);
         }
 
         private void CreateChunks()
@@ -87,20 +89,18 @@ namespace JoyNow.SLG
         /// <param name="i"></param>
         private void CreateCell(int x, int z, int i)
         {
+            SquareCell cell = Cells[i] = Instantiate(cellPrefab);
             Vector3 position;
             position.x = x * MapMetrics.CellEdgeLength;
             position.y = 0f;
             position.z = z * MapMetrics.CellEdgeLength;
-
-            SquareCell cell = Cells[i] = Instantiate(cellPrefab);
-            cell.Index = i;
             cell.transform.localPosition = position;
             cell.name = "Cell-" + cell.Index.ToString("0000") + "  (" + x + "," + z + ")";
             
             TextMeshProUGUI label = Instantiate(mapCellLabelPrefab);
             cell.uiLabel = label;
             label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
-            cell.SetTerrainType(CellTerrainType.Land);
+            cell.InitCell(i);
             
             AddCellToChunk(x, z, cell);
         }

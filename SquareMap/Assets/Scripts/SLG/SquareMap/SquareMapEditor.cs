@@ -7,10 +7,10 @@ namespace JoyNow.SLG
     {
         public SquareGrid squareGrid;
         
-        [Range(0, 5)] 
+        [Range(0, 10)] 
         public int brushExtendSize = 0;
         
-        public CellTerrainType activeTerrainType = CellTerrainType.Default;
+        public CellTerrainType activeTerrainType = CellTerrainType.Plain;
 
         private void Awake()
         {
@@ -52,8 +52,12 @@ namespace JoyNow.SLG
             int centerZ = center.Coordinates.Z;
             for (int z = centerZ - brushExtendSize; z <= centerZ + brushExtendSize; z++)
             {
+                if (z < 0) continue;
+                if (z >= SquareGrid.cellCountZ) continue;
                 for (int x = centerX - brushExtendSize; x <= centerX + brushExtendSize; x++)
                 {
+                    if (x < 0) continue;
+                    if (x >= SquareGrid.cellCountZ) continue;
                     var coordinates = new CellCoordinates(x, z);
                     var cell = squareGrid.GetCell(coordinates);
                     if (cell != null)

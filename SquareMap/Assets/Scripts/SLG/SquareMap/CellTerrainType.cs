@@ -3,11 +3,16 @@ using UnityEngine;
 
 namespace JoyNow.SLG
 {
+    // 地形类型，需要迁移到数据表，定义是否通行，移动力等
+    // 在地图上仅标注格子类型，具体的显示效果使用 Tilemap 实现
     public enum CellTerrainType : byte
     {
-        Default = 1,
-        Land = 2,
-        Sea = 3,
+        Plain = 0,  // 默认，平原，无特殊效果
+        Water,
+        Lawn,  // 草地，无特殊效果
+        Mountain,  // 高山，无法通行
+        Building,  // 建筑，无法通行
+        Forest, // 林地，通行力消耗翻倍
     }
     
     
@@ -15,16 +20,16 @@ namespace JoyNow.SLG
     {
         public static Color GetColorTip(this CellTerrainType terrainType)
         {
-            Color color = Color.white;
-            switch (terrainType)
+            Color color = terrainType switch
             {
-                case CellTerrainType.Land:
-                    color = Color.yellow;
-                    break;
-                case CellTerrainType.Sea:
-                    color = Color.cyan;
-                    break;
-            }
+                CellTerrainType.Plain => Color.gray,
+                CellTerrainType.Water => Color.cyan,
+                CellTerrainType.Lawn => Color.green,
+                CellTerrainType.Mountain => Color.white,
+                CellTerrainType.Building => Color.yellow,
+                CellTerrainType.Forest => new Color(0, 0.5f, 0, 1),
+                _ => Color.black,
+            };
             color.a = 1f;
             return color;
         }

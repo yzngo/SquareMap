@@ -17,6 +17,14 @@ namespace JoyNow.SLG
         
         public CellCoordinates(int x, int z)
         {
+            if (x < 0 || x >= SquareGrid.cellCountX)
+            {
+                throw new ArgumentOutOfRangeException(nameof(x) + " " + x, "Coordinates out of range");
+            }
+            if (z < 0 || z >= SquareGrid.cellCountZ)
+            {
+                throw new ArgumentOutOfRangeException(nameof(z) + " " + z, "Coordinates out of range");
+            }
             this.x = x;
             this.z = z;
         }

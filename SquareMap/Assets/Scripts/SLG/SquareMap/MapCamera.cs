@@ -6,12 +6,13 @@ namespace JoyNow.SLG
 {
     public class MapCamera : MonoBehaviour
     {
-        public float moveSpeed = 1;
-        public float cameraMinSize = 5;
-        public float cameraMaxSize = 50;
-        public float swivelMinZoom = 70;
-        public float swivelMaxZoom = 45;
-        public float zoom = 0.2f;
+        public const float moveSpeed = 0.1f;
+        public const float cameraMinSize = 5;
+        public const float cameraMaxSize = 100;
+        // 缩放时同时旋转角度，越远越平
+        public const float swivelMinZoom = 45;
+        public const float swivelMaxZoom = 45;
+        private float zoom = 0.2f;
         public SquareGrid grid;
         
         private Transform swivel;
@@ -55,7 +56,7 @@ namespace JoyNow.SLG
         
         private void AdjustPosition(float xDelta, float yDelta)
         {
-            Vector3 offset = new Vector3(xDelta, yDelta, 0) * moveSpeed;
+            Vector3 offset = new Vector3(xDelta, yDelta, 0) * (mainCamera.orthographicSize * moveSpeed);
             Vector3 position = stick.localPosition + offset;
             stick.localPosition = ClampPosition(position);
         }
@@ -63,7 +64,7 @@ namespace JoyNow.SLG
         private Vector3 ClampPosition(Vector3 position)
         {
             float xMin = -MapMetrics.HalfCellDiagonalLength;
-            float xMax = Mathf.Sqrt(grid.gridWidth * grid.gridWidth + grid.gridHeight * grid.gridHeight) - MapMetrics.HalfCellDiagonalLength;
+            float xMax = Mathf.Sqrt(grid.GridWidth * grid.GridWidth + grid.GridHeight * grid.GridHeight) - MapMetrics.HalfCellDiagonalLength;
             position.x = Mathf.Clamp(position.x, xMin, xMax);
             return position;
         }

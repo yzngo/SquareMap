@@ -12,8 +12,15 @@ namespace JoyNow.SLG
         public CellCoordinates Coordinates => CellCoordinates.FromIndex(Index);
         public Vector3 Position => transform.localPosition;
         
-        public CellTerrainType TerrainType = CellTerrainType.Land;
+        public CellTerrainType TerrainType = CellTerrainType.Plain;
 
+        public int CellFeatureId = -1;      // CellFeatureConfig
+
+        public bool IsInteractable = true;
+        
+        public CellStates CellStates;
+        
+        
         public TextMeshProUGUI uiLabel;
 
         public SquareGridChunk chunk;
@@ -24,6 +31,13 @@ namespace JoyNow.SLG
         public bool IsPassableEdge(SquareDirection direction)
         {
             return EdgePassable[(int) direction];
+        }
+
+        public void InitCell(int index)
+        {
+            Index = index;
+            SetTerrainType(CellTerrainType.Plain);
+            CellStates.HasState(CellStates.Interactable);
         }
         
         
