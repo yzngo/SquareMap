@@ -31,9 +31,7 @@ namespace JoyNow.SLG
             colors = ListPool<Color>.Get();
             triangles = ListPool<int>.Get();
             uvs = ListPool<Vector2>.Get();
-            vertices.Clear();
-            colors.Clear();
-            triangles.Clear();
+            
             for (int i = 0; i < cells.Length; i++)
             {
                 Triangulate(cells[i]);
@@ -41,18 +39,21 @@ namespace JoyNow.SLG
             squareMesh.SetVertices(vertices);
             squareMesh.SetColors(colors);
             squareMesh.SetTriangles(triangles, 0);
+            squareMesh.SetUVs(0, uvs);
+            
             ListPool<Vector3>.Release(vertices);
             ListPool<Color>.Release(colors);
             ListPool<int>.Release(triangles);
             ListPool<Vector2>.Release(uvs);
+            
             squareMesh.RecalculateNormals();
         }
        
         private void Triangulate(SquareCell cell)
         {
             Vector3 center = cell.Position;
-            
             int vertexIndex = vertices.Count;
+            
             // 添加顶点和颜色
             for(var d = SquareDirection.North; d <= SquareDirection.West; d++)
             {
