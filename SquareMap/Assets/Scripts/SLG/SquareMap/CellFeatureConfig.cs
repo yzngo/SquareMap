@@ -1,6 +1,6 @@
 ﻿namespace JoyNow.SLG
 {
-    public enum FeatureType
+    public enum FeatureAssetType
     {
         Sprite,
         Spine,
@@ -8,8 +8,9 @@
     public class CellFeatureConfig
     {
         public int Id;
-        public FeatureType FeatureType;
+        public FeatureAssetType FeatureAssetType;
         public string FeatureName;
+        public bool IsPassable = true;
         public int Layer;
     }
 }

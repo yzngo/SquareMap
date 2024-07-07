@@ -12,9 +12,6 @@ namespace JoyNow.SLG
         
         public CellTerrainType activeTerrainType = CellTerrainType.Plain;
 
-        private void Awake()
-        {
-        }
 
         private void Update()
         {
@@ -45,6 +42,11 @@ namespace JoyNow.SLG
                 EditorCells(cell);
             }
         }
+        
+        public void SetBrushSize(int size)
+        {
+            brushExtendSize = size;
+        }
 
         public void EditorCells(SquareCell center)
         {
@@ -71,12 +73,7 @@ namespace JoyNow.SLG
 
         public void EditorCell(SquareCell cell)
         {
-            cell.SetTerrainType(activeTerrainType);
-        }
-
-        public void SetBrushSize(int size)
-        {
-            brushExtendSize = size;
+            cell.TerrainType = activeTerrainType;
         }
 
         public void ShowUI(bool visible)

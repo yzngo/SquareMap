@@ -12,9 +12,35 @@ namespace JoyNow.SLG
         public CellCoordinates Coordinates => CellCoordinates.FromIndex(Index);
         public Vector3 Position => transform.localPosition;
         
-        public CellTerrainType TerrainType = CellTerrainType.Plain;
+        private CellTerrainType terrainType = CellTerrainType.Plain;
 
-        public int CellFeatureId = -1;      // CellFeatureConfig
+        public CellTerrainType TerrainType
+        {
+            get => terrainType;
+            set
+            {
+                if (terrainType != value)
+                {
+                    terrainType = value;
+                    uiLabel.text = Coordinates + "\n" + TerrainType;
+                    RefreshChunk();
+                }
+            }
+        }
+        
+        private int cellFeatureId = -1;  // CellFeatureConfig
+
+        public int CellFeatureId
+        {
+            get => cellFeatureId;
+            set {
+                if (cellFeatureId != value)
+                {
+                    cellFeatureId = value;
+                    RefreshChunk();
+                }
+            }
+        }
 
         public CellStates CellStates;
         
@@ -33,8 +59,10 @@ namespace JoyNow.SLG
         public void InitCell(int index)
         {
             Index = index;
-            SetTerrainType(CellTerrainType.Plain);
+            TerrainType = CellTerrainType.Plain;
             CellStates.AddState(CellStates.Interactable);
+            uiLabel.text = Coordinates + "\n" + TerrainType;
+            RefreshChunk();
         }
         
         
@@ -64,12 +92,7 @@ namespace JoyNow.SLG
             return SquareGrid.Instance.Cells[CellCoordinates.ToIndex(x, z)];       
         }
         
-        public void SetTerrainType(CellTerrainType terrainType)
-        {
-            TerrainType = terrainType;
-            uiLabel.text = Coordinates + "\n" + TerrainType;
-            RefreshChunk();
-        }
+
 
         private void RefreshChunk()
         {
