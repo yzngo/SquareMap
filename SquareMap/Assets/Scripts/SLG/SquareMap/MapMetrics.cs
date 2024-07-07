@@ -21,7 +21,7 @@ namespace JoyNow.SLG
         // 格子对角线长度的一半
         public static float HalfCellDiagonalLength = 0.5f * CellDiagonalLength;
         
-
+        // 四边形格子相对于中心的顶点坐标，从左上角开始，顺时针计算
         private static Vector3[] cellCornersLocation =
         {
             new Vector3(-HalfCellEdgeLength, 0, HalfCellEdgeLength),

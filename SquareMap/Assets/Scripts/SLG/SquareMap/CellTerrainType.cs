@@ -25,7 +25,7 @@ namespace JoyNow.SLG
                     color = Color.cyan;
                     break;
             }
-            color.a = 0.5f;
+            color.a = 1f;
             return color;
         }
     }

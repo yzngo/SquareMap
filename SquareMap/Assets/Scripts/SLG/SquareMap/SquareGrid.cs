@@ -100,6 +100,7 @@ namespace JoyNow.SLG
             TextMeshProUGUI label = Instantiate(mapCellLabelPrefab);
             cell.uiLabel = label;
             label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
+            cell.SetTerrainType(CellTerrainType.Land);
             
             AddCellToChunk(x, z, cell);
         }

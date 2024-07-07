@@ -55,7 +55,6 @@ namespace JoyNow.SLG
         
         public void SetTerrainType(CellTerrainType terrainType)
         {
-            if (TerrainType == terrainType) return;
             TerrainType = terrainType;
             uiLabel.text = Coordinates + "\n" + TerrainType;
             RefreshChunk();
