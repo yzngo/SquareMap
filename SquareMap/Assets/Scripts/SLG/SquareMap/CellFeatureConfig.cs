@@ -5,6 +5,7 @@
         Sprite,
         Spine,
     }
+    
     public class CellFeatureConfig
     {
         public int Id;

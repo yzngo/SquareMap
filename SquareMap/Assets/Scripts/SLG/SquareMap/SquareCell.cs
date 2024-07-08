@@ -58,7 +58,7 @@ namespace JoyNow.SLG
         [SerializeField]
         private bool[] EdgePassable = new bool[] {true, true, true, true};
         
-        public bool IsPassableEdge(SquareDirection direction)
+        public bool IsPassableEdge(CellDirection direction)
         {
             return EdgePassable[(int) direction];
         }
@@ -73,22 +73,22 @@ namespace JoyNow.SLG
         }
         
         
-        public SquareCell GetNeighbor(SquareDirection squareDirection)
+        public SquareCell GetNeighbor(CellDirection cellDirection)
         {
             int x =  Coordinates.X;
             int z =  Coordinates.Z;
-            switch (squareDirection)
+            switch (cellDirection)
             {
-                case SquareDirection.North:
+                case CellDirection.North:
                     z += 1;
                     break;
-                case SquareDirection.East:
+                case CellDirection.East:
                     x += 1;
                     break;
-                case SquareDirection.South:
+                case CellDirection.South:
                     z -= 1;
                     break;
-                case SquareDirection.West:
+                case CellDirection.West:
                     x -= 1;
                     break;
             }

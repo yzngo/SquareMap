@@ -16,7 +16,6 @@ namespace JoyNow.SLG
         private List<Color> colors;
         private List<int> triangles;
         private List<Vector2> uvs;
-        
 
         private void Awake()
         {
@@ -54,12 +53,18 @@ namespace JoyNow.SLG
             Vector3 center = cell.Position;
             int vertexIndex = vertices.Count;
             
-            // 添加顶点和颜色
-            for(var d = SquareDirection.North; d <= SquareDirection.West; d++)
-            {
-                vertices.Add(center + MapMetrics.GetFirstCorner(d));
-                colors.Add(cell.TerrainType.GetColorTip());
-            }
+            // 添加顶点
+            vertices.Add(center + MapMetrics.GetFirstCorner(CellDirection.North));
+            vertices.Add(center + MapMetrics.GetFirstCorner(CellDirection.East));
+            vertices.Add(center + MapMetrics.GetFirstCorner(CellDirection.South));
+            vertices.Add(center + MapMetrics.GetFirstCorner(CellDirection.West));
+            
+            // 添加顶点色
+            colors.Add(cell.TerrainType.GetColorTip());
+            colors.Add(cell.TerrainType.GetColorTip());
+            colors.Add(cell.TerrainType.GetColorTip());
+            colors.Add(cell.TerrainType.GetColorTip());
+            
             // 添加 UV
             uvs.Add(new Vector2(1, 0));
             uvs.Add(new Vector2(1, 1));

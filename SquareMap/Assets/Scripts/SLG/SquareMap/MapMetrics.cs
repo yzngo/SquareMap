@@ -31,12 +31,12 @@ namespace JoyNow.SLG
             new Vector3(-HalfCellEdgeLength, 0, HalfCellEdgeLength)
         };
 
-        public static Vector3 GetFirstCorner(SquareDirection direction)
+        public static Vector3 GetFirstCorner(CellDirection direction)
         {
             return cellCornersLocation[(int)direction];
         }
         
-        public static Vector3 GetSecondCorner(SquareDirection direction)
+        public static Vector3 GetSecondCorner(CellDirection direction)
         {
             return cellCornersLocation[(int)direction + 1];
         }
